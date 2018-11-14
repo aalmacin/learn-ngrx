@@ -1,0 +1,10 @@
+<button (click)="increment()">Increment</button>
+<button (click)="decrement()">Decrement</button>
+
+<div>
+  {{(countState$ | async).count}}
+</div>
+
+<div>
+  <button (click)="reset()">Reset</button>
+</div>
