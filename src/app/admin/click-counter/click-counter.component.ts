@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Store} from '@ngrx/store';
+import {createFeatureSelector, Store} from '@ngrx/store';
 import {ClickState} from '../click.reducer';
 import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {OverrideClicks, PerformClick} from '../click.actions';
 
 @Component({
   selector: 'app-click-counter',
@@ -12,10 +14,20 @@ export class ClickCounterComponent implements OnInit {
   clickState$: Observable<number>;
 
   constructor(private store: Store<ClickState>) {
-    this.clickState$ = store.select('clicks');
+    const selector = createFeatureSelector<ClickState>('admin')
+    this.clickState$ = store.select(selector).pipe(
+      map(data => data.clicks)
+    );
   }
 
   ngOnInit() {
   }
 
+  performClick() {
+    this.store.dispatch(new PerformClick());
+  }
+
+  overrideClicks($event) {
+    this.store.dispatch(new OverrideClicks(+$event.target.value));
+  }
 }

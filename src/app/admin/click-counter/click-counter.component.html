@@ -1,3 +1,11 @@
 <div>
-  Clicks: {{(clickState$ | async).clicks}}
+  <button (click)="performClick()">Click</button>
+  <div>
+    Clicks: {{(clickState$ | async).clicks}}
+  </div>
+
+  <div>
+    <input (change)="overrideClicks($event)" type="number">
+  </div>
+
 </div>
